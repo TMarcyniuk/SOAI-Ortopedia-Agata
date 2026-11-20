@@ -20,6 +20,13 @@ async function request(path, options = {}) {
   return data;
 }
 
+// Opciones para enviar JSON
+const json = (method, body) => ({
+  method,
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify(body),
+});
+
 export const getHealth = () => request("/api/health");
 
 // Arma ?a=1&b=2 salteando los valores vacíos
@@ -34,14 +41,33 @@ function toQuery(params) {
 
 export const getCategories = () => request("/api/categories");
 
+export const createCategory = (name) => request("/api/categories", json("POST", { name }));
+
+export const deleteCategory = (id) => request(`/api/categories/${id}`, { method: "DELETE" });
+
 export const getProducts = (params) => request(`/api/products${toQuery(params)}`);
 
-export const updateProduct = (id, values) =>
-  request(`/api/products/${id}`, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(values),
-  });
+export const createProduct = (values) => request("/api/products", json("POST", values));
+
+export const updateProduct = (id, values) => request(`/api/products/${id}`, json("PUT", values));
 
 export const toggleProductActive = (id) =>
   request(`/api/products/${id}/toggle-active`, { method: "POST" });
+
+// ---------- Importación desde Excel/CSV ----------
+// La plantilla se descarga con un link común (el backend la manda como archivo adjunto)
+export const IMPORT_TEMPLATE_URL = `${API_URL}/api/import/template`;
+
+// El archivo viaja como multipart/form-data (fetch pone el Content-Type solo)
+function uploadBody(file, mode) {
+  const body = new FormData();
+  body.append("file", file);
+  if (mode) body.append("mode", mode);
+  return body;
+}
+
+export const previewImport = (file) =>
+  request("/api/import/preview", { method: "POST", body: uploadBody(file) });
+
+export const confirmImport = (file, mode) =>
+  request("/api/import/confirm", { method: "POST", body: uploadBody(file, mode) });

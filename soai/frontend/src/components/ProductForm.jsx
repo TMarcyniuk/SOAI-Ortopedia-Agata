@@ -40,12 +40,78 @@ function initialValues(product) {
   };
 }
 
+// Crear una categoría nueva sin salir del formulario (sus botones no envían el formulario)
+function NewCategory({ onCreate }) {
+  const [open, setOpen] = useState(false);
+  const [name, setName] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState("");
+
+  async function handleCreate() {
+    setBusy(true);
+    setError("");
+    try {
+      await onCreate(name);
+      setName("");
+      setOpen(false);
+    } catch (err) {
+      setError((err.fields && err.fields.name) || err.message);
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  function handleCancel() {
+    setOpen(false);
+    setName("");
+    setError("");
+  }
+
+  if (!open) {
+    return (
+      <button type="button" className="link-button" onClick={() => setOpen(true)}>
+        + Crear una categoría nueva
+      </button>
+    );
+  }
+
+  return (
+    <div className="new-category">
+      <label htmlFor="new-category-name">Nombre de la categoría nueva</label>
+      <div className="new-category-row">
+        <input
+          id="new-category-name"
+          className="control"
+          value={name}
+          maxLength={80}
+          autoFocus
+          onChange={(event) => setName(event.target.value)}
+          onKeyDown={(event) => {
+            if (event.key === "Enter") {
+              event.preventDefault(); // Enter crea la categoría, no guarda el producto
+              handleCreate();
+            }
+          }}
+        />
+        <button type="button" className="btn btn-primary" onClick={handleCreate} disabled={busy}>
+          {busy ? "Creando…" : "Crear"}
+        </button>
+        <button type="button" className="btn btn-secondary" onClick={handleCancel} disabled={busy}>
+          Cancelar
+        </button>
+      </div>
+      {error && <ErrorMessage>{error}</ErrorMessage>}
+    </div>
+  );
+}
+
 /**
- * Formulario de producto. Si recibe `product` es para editar (el código queda bloqueado).
- * La validación la hace el backend: acá solo se muestran sus errores.
+ * Formulario de producto. Si recibe `product` es para editar (el código queda bloqueado);
+ * sin `product` es un alta. La validación la hace el backend: acá solo se muestran sus errores.
  * onSubmit(values) debe devolver una promesa; si falla, se muestran los errores.
+ * onCreateCategory(name) es opcional: si viene, se puede crear una categoría desde el formulario.
  */
-export default function ProductForm({ categories, product, onSubmit, onCancel, submitLabel = "Guardar cambios" }) {
+export default function ProductForm({ categories, product, onSubmit, onCancel, onCreateCategory, submitLabel = "Guardar cambios" }) {
   const [values, setValues] = useState(() => initialValues(product));
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
@@ -68,13 +134,24 @@ export default function ProductForm({ categories, product, onSubmit, onCancel, s
     }
   }
 
+  // Crea la categoría y la deja elegida en la lista
+  async function handleCreateCategory(name) {
+    const category = await onCreateCategory(name);
+    setValues((v) => ({ ...v, category_id: String(category.id) }));
+  }
+
   return (
     <form onSubmit={handleSubmit} noValidate>
       {error && <ErrorMessage banner>{error}</ErrorMessage>}
 
       <div className="form-grid">
-        <Field label="Código" name="code" error={fields.code} hint={product ? "El código no se puede modificar." : null}>
-          <input id="code" className="control" value={values.code} onChange={set("code")} disabled={!!product} />
+        <Field
+          label="Código"
+          name="code"
+          error={fields.code}
+          hint={product ? "El código no se puede modificar." : "Se guarda en mayúsculas y después no se puede cambiar."}
+        >
+          <input id="code" className="control" value={values.code} onChange={set("code")} disabled={!!product} autoFocus={!product} />
         </Field>
         <Field label="Categoría" name="category_id" error={fields.category_id}>
           <select id="category_id" className="control" value={values.category_id} onChange={set("category_id")}>
@@ -83,6 +160,7 @@ export default function ProductForm({ categories, product, onSubmit, onCancel, s
               <option key={c.id} value={c.id}>{c.name}</option>
             ))}
           </select>
+          {onCreateCategory && <NewCategory onCreate={handleCreateCategory} />}
         </Field>
         <Field label="Nombre" name="name" error={fields.name} className="span-2">
           <input id="name" className="control" value={values.name} onChange={set("name")} />

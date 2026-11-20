@@ -1,5 +1,4 @@
-const money = new Intl.NumberFormat("es-AR", { style: "currency", currency: "ARS" });
-const integer = new Intl.NumberFormat("es-AR");
+import { integer, money } from "../format.js";
 
 // Estados del producto: siempre se muestran con texto, no solo con color
 const STATUS = {

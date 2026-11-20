@@ -533,3 +533,218 @@ td .actions {
     grid-template-columns: 1fr;
   }
 }
+
+/* ---------- Cargar datos (Paso 2) ---------- */
+.card {
+  max-width: 720px;
+  padding: 24px;
+  background: var(--surface);
+  border: 1px solid var(--gray-300);
+  border-radius: 12px;
+}
+
+/* Pestañas */
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+  border-bottom: 2px solid var(--gray-300);
+}
+
+.tab {
+  min-height: 44px;
+  margin-bottom: -2px;
+  padding: 0 20px;
+  border: none;
+  border-bottom: 3px solid transparent;
+  background: transparent;
+  color: var(--gray-500);
+  font: 600 0.95rem var(--font-text);
+  cursor: pointer;
+}
+
+.tab:hover {
+  color: var(--ink);
+}
+
+.tab.active {
+  color: var(--ink);
+  border-bottom-color: var(--brand);
+}
+
+/* Crear una categoría desde el formulario */
+.link-button {
+  min-height: 44px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--brand-dark);
+  font: 600 0.9rem var(--font-text);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.new-category {
+  margin-top: 8px;
+  padding: 12px;
+  border-radius: 10px;
+  background: var(--pink-50);
+}
+
+.new-category-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.new-category-row .control {
+  flex: 1 1 180px;
+  width: auto;
+}
+
+/* El borde rojo de error es solo del selector, no de este cuadro */
+.has-error .new-category .control {
+  border-color: var(--gray-300);
+}
+
+/* Importación */
+.import-intro {
+  max-width: 720px;
+}
+
+.import-intro p {
+  margin: 0 0 12px;
+}
+
+.import-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin: 16px 0;
+}
+
+.file-picker {
+  position: relative;
+  cursor: pointer;
+}
+
+.file-picker:focus-within {
+  outline: 3px solid var(--brand);
+  outline-offset: 2px;
+}
+
+.file-name {
+  color: var(--gray-500);
+  overflow-wrap: anywhere;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin: 24px 0;
+}
+
+.stat {
+  padding: 16px;
+  background: var(--surface);
+  border: 1px solid var(--gray-300);
+  border-radius: 12px;
+}
+
+.stat dt {
+  font-size: 0.85rem;
+  color: var(--gray-500);
+}
+
+.stat dd {
+  margin: 4px 0 0;
+  font: 700 1.5rem var(--font-title);
+}
+
+.stat-danger dd {
+  color: var(--danger);
+}
+
+.section-title {
+  margin: 32px 0 12px;
+  font-size: 1.1rem;
+}
+
+.notice-warn {
+  background: var(--amber-100);
+  color: var(--amber-800);
+}
+
+.mode {
+  margin: 24px 0 0;
+  padding: 0;
+  border: none;
+}
+
+.mode legend {
+  padding: 0;
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+
+.radio {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  cursor: pointer;
+}
+
+.radio input {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--brand);
+}
+
+.import-submit {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+@media (max-width: 640px) {
+  .stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Lista de categorías */
+.category-list {
+  margin-top: 24px;
+}
+
+.category-list .section-title {
+  margin-top: 0;
+}
+
+.category-list p {
+  margin: 0;
+}
+
+.category-items {
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.category-items li {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 8px 0;
+  border-top: 1px solid var(--gray-100);
+}
+
+.category-name {
+  flex: 1;
+  font-weight: 500;
+}

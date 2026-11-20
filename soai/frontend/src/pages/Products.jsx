@@ -5,8 +5,8 @@ import { getCategories, getProducts, toggleProductActive, updateProduct } from "
 import Modal from "../components/Modal.jsx";
 import ProductForm, { ErrorMessage } from "../components/ProductForm.jsx";
 import ProductTable, { BanIcon } from "../components/ProductTable.jsx";
+import { integer } from "../format.js";
 
-const integer = new Intl.NumberFormat("es-AR");
 const EMPTY_FILTERS = { q: "", category_id: "", stock: "all", active: "1" };
 
 export default function Products() {

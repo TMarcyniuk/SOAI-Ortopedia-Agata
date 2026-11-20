@@ -4,7 +4,6 @@ import { NavLink, Outlet } from "react-router-dom";
 import { getHealth } from "../api.js";
 
 const MENU = [
-  { to: "/", label: "Dashboard" },
   { to: "/products", label: "Productos" },
   { to: "/load-data", label: "Cargar datos" },
 ];
@@ -58,7 +57,6 @@ export default function Layout() {
             <NavLink
               key={item.to}
               to={item.to}
-              end={item.to === "/"}
               className={({ isActive }) => (isActive ? "menu-link active" : "menu-link")}
             >
               {item.label}
