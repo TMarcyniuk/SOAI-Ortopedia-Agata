@@ -10,15 +10,13 @@ Antes de ejecutar el proyecto, instalá:
 * **Python 3.11 o superior**: https://www.python.org/downloads/ . En Windows, durante la instalación marcá la opción *Add Python to PATH*.
 * **Node.js 20 o superior**: https://nodejs.org/
 * **MySQL Server 8.0.16 o superior**: https://dev.mysql.com/downloads/mysql/ . Durante la instalación se te pide crear una **contraseña para el usuario `root`**: anotala, la vas a necesitar.
-* **MySQL Workbench** (para importar la base de datos): https://dev.mysql.com/downloads/workbench/
+* **MySQL Workbench**: https://dev.mysql.com/downloads/workbench/
 * **Visual Studio Code** (opcional, recomendado para editar archivos): https://code.visualstudio.com/
-
-Además, necesitás el archivo **`soai_dump.sql`** (la base de datos exportada), que se entrega junto con el proyecto.
 
 ## Instalación y configuración
 
 ### 1. Abrir el proyecto
-Abrí en Visual Studio Code la carpeta `soai` (la que contiene las carpetas `backend` y `frontend`). Después, abrí una terminal desde *Terminal > New Terminal* (o *Terminal > Nueva terminal*).
+Abrí en Visual Studio Code la carpeta `soai` (la que contiene las carpetas `backend` y `frontend`). 
 
 ### 2. Importar la base de datos
 Asegurate de que MySQL Server esté iniciado.
@@ -32,10 +30,10 @@ Asegurate de que MySQL Server esté iniciado.
 Importante: el archivo crea la base `soai` y reemplaza sus tablas. Si ya tenías una base con ese nombre y querés conservar su información, hacé una copia de seguridad antes de importar. No hace falta crear nada más ni ejecutar migraciones.
 
 ### 3. Preparar el backend
-En la terminal, entrá a la carpeta `backend`:
+Cre una terminal (CMD o Powershell) y entrá a la carpeta `backend`:
 
 ```
-cd backend
+cd C: (ruta absoluta)
 ```
 
 Creá y activá un entorno virtual (mantiene separadas las dependencias del proyecto).
@@ -58,20 +56,6 @@ Cuando el entorno esté activo, vas a ver `(venv)` al comienzo de la línea de l
 
 ```
 pip install -r requirements.txt
-```
-
-Por último, creá el archivo de configuración copiando la plantilla.
-
-Windows (PowerShell):
-
-```
-copy .env.example .env
-```
-
-macOS o Linux:
-
-```
-cp .env.example .env
 ```
 
 ### 4. Configurar la conexión a MySQL
@@ -127,23 +111,11 @@ flask run
 Para comprobar que funciona, abrí en el navegador http://localhost:5000/api/health . Tiene que mostrar `"status": "ok"`. **Dejá esta terminal abierta**: si la cerrás, el sistema deja de funcionar.
 
 ### 6. Preparar y ejecutar el frontend
-Abrí una **segunda terminal** en Visual Studio Code (sin cerrar la anterior), entrá a la carpeta `frontend` y ejecutá:
+Abrí una **segunda terminal** en Visual Studio Code (sin cerrar la anterior), posicionate sobre la carpeta `frontend` y ejecutá:
 
-Windows (PowerShell):
 
 ```
-cd frontend
 npm install
-copy .env.example .env
-npm run dev
-```
-
-macOS o Linux:
-
-```
-cd frontend
-npm install
-cp .env.example .env
 npm run dev
 ```
 
