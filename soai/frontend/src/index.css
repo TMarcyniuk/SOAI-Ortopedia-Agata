@@ -1,0 +1,535 @@
+/* Colores basados en el logo de Agata (hex estimados: verificar con cuentagotas) */
+:root {
+  --brand: #d32f3c; /* rojo del logo: botones principales, ítem activo, foco */
+  --brand-dark: #b3242f; /* hover */
+  --pink-50: #fef1f5;
+  --pink-100: #fce3ea; /* fondos suaves: hover de fila, selección */
+  --pink-500: #ee6a8b; /* solo para el ladrillo rosa del logo */
+  --amber-100: #fff1c9;
+  --amber-500: #f2b51d;
+  --amber-800: #7a5600; /* stock bajo y advertencias */
+  --ink: #1a1a1a;
+  --gray-500: #6e6764;
+  --gray-300: #d9d2ce;
+  --gray-100: #f1ece9;
+  --bg: #fbf8f6;
+  --surface: #ffffff;
+  --success: #2e7d32;
+  --success-bg: #e3f3e4;
+  --danger: #b42318;
+  --danger-bg: #fde8e6;
+
+  --font-text: "Inter", system-ui, sans-serif;
+  --font-title: "Poppins", "Inter", system-ui, sans-serif;
+  --sidebar-width: 240px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-text);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--ink);
+  background: var(--bg);
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-title);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+h1 {
+  margin: 0 0 24px;
+  font-size: 1.75rem;
+}
+
+.muted {
+  color: var(--gray-500);
+}
+
+/* Foco visible para quien navega con teclado */
+:focus-visible {
+  outline: 3px solid var(--brand);
+  outline-offset: 2px;
+}
+
+/* ---------- Estructura general ---------- */
+.app {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  position: sticky;
+  top: 0;
+  align-self: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  width: var(--sidebar-width);
+  height: 100vh;
+  padding: 24px 16px;
+  background: var(--ink);
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.content {
+  flex: 1;
+  min-width: 0;
+  padding: 32px;
+}
+
+/* ---------- Logo ---------- */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 8px;
+}
+
+.logo-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.logo-small {
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  color: var(--gray-300);
+}
+
+.logo-big {
+  font-family: var(--font-title);
+  font-weight: 700;
+  font-size: 1.9rem;
+  color: #fff;
+}
+
+/* ---------- Menú ---------- */
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.menu-link {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 16px;
+  border-radius: 10px;
+  color: #fff;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.menu-link:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.menu-link.active {
+  background: var(--brand);
+}
+
+.menu-link:focus-visible {
+  outline-color: #fff;
+}
+
+/* ---------- Estado del servidor ---------- */
+.server-status {
+  margin: auto 8px 0;
+  font-size: 0.85rem;
+  color: var(--gray-300);
+}
+
+.server-status::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-right: 8px;
+  border-radius: 50%;
+  background: var(--gray-500);
+}
+
+.server-ok::before {
+  background: #6fcf74;
+}
+
+.server-down::before {
+  background: var(--amber-500);
+}
+
+/* ---------- Estado vacío ---------- */
+.empty-state {
+  max-width: 560px;
+  padding: 32px;
+  background: var(--surface);
+  border: 1px dashed var(--gray-300);
+  border-radius: 12px;
+}
+
+.empty-state p {
+  margin: 0;
+}
+
+.empty-state p + p {
+  margin-top: 8px;
+}
+
+/* ---------- Botones (mínimo 44px de alto para usar en tablet) ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 18px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  font: 600 0.95rem var(--font-text);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: var(--brand);
+  color: #fff;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--brand-dark);
+}
+
+.btn-secondary {
+  background: var(--surface);
+  border-color: var(--gray-300);
+  color: var(--ink);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: var(--gray-100);
+}
+
+/* Acción destructiva: nunca relleno rojo; borde + ícono + texto en color de peligro */
+.btn-danger {
+  background: var(--surface);
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+.btn-danger:hover:not(:disabled) {
+  background: var(--danger-bg);
+}
+
+/* ---------- Campos de formulario ---------- */
+.control {
+  width: 100%;
+  min-height: 44px;
+  padding: 0 12px;
+  border: 1px solid var(--gray-300);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--ink);
+  font: inherit;
+}
+
+textarea.control {
+  min-height: 90px;
+  padding: 10px 12px;
+  resize: vertical;
+}
+
+.control:disabled {
+  background: var(--gray-100);
+  color: var(--gray-500);
+}
+
+.search-input {
+  min-height: 52px;
+  font-size: 1.05rem;
+}
+
+.field label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.has-error .control {
+  border-color: var(--danger);
+}
+
+.hint {
+  margin: 6px 0 0;
+  font-size: 0.85rem;
+  color: var(--gray-500);
+}
+
+/* Errores: siempre ícono + texto en color de peligro (el rojo de marca no es error) */
+.error-message {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 6px 0 0;
+  color: var(--danger);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.error-message svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.error-message.banner {
+  margin: 0 0 16px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  background: var(--danger-bg);
+}
+
+.notice {
+  margin: 0 0 16px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  background: var(--success-bg);
+  color: var(--success);
+  font-weight: 500;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.span-2 {
+  grid-column: 1 / -1;
+}
+
+/* ---------- Filtros y paginación ---------- */
+.filters {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin: 16px 0 24px;
+}
+
+.pagination {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.pagination p {
+  margin: 0;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* ---------- Tabla (14px) ---------- */
+.table-wrap {
+  overflow-x: auto;
+  background: var(--surface);
+  border: 1px solid var(--gray-300);
+  border-radius: 12px;
+}
+
+.table-wrap.is-loading {
+  opacity: 0.6;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+th {
+  padding: 12px 16px;
+  background: var(--gray-100);
+  text-align: left;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+td {
+  padding: 10px 16px;
+  border-top: 1px solid var(--gray-100);
+  vertical-align: middle;
+}
+
+td:first-child {
+  white-space: nowrap;
+}
+
+tbody tr:hover {
+  background: var(--pink-50);
+}
+
+.num {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.row-inactive td:not(:last-child) {
+  color: var(--gray-500);
+}
+
+td .actions {
+  justify-content: flex-end;
+  flex-wrap: nowrap;
+}
+
+/* ---------- Badges de estado (siempre con texto) ---------- */
+.badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.badge-ok {
+  background: var(--success-bg);
+  color: var(--success);
+}
+
+.badge-warn {
+  background: var(--amber-100);
+  color: var(--amber-800);
+}
+
+.badge-danger {
+  background: var(--danger-bg);
+  color: var(--danger);
+}
+
+.badge-muted {
+  background: var(--gray-100);
+  color: var(--gray-500);
+}
+
+/* ---------- Modal ---------- */
+.modal {
+  width: min(640px, calc(100% - 32px));
+  max-height: calc(100vh - 32px);
+  padding: 24px;
+  border: none;
+  border-radius: 14px;
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.modal::backdrop {
+  background: rgba(26, 26, 26, 0.55);
+}
+
+.modal h2 {
+  margin: 0 0 16px;
+  font-size: 1.25rem;
+}
+
+.modal-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+/* Solo para lectores de pantalla */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+/* ---------- Tablet: el menú pasa arriba y la tabla se compacta ---------- */
+@media (max-width: 1100px) {
+  .app {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    position: static;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px 24px;
+    width: 100%;
+    height: auto;
+    padding: 12px 16px;
+  }
+
+  .menu {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .server-status {
+    margin: 0 0 0 auto;
+  }
+
+  .content {
+    padding: 20px 16px;
+  }
+
+  th,
+  td {
+    padding: 10px 8px;
+  }
+
+  td:nth-child(2) {
+    min-width: 150px;
+  }
+
+  td .actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  td .btn {
+    padding: 0 10px;
+  }
+}
+
+/* ---------- Celular / pantallas muy angostas ---------- */
+@media (max-width: 640px) {
+  .filters,
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
