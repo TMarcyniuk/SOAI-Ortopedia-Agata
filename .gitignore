@@ -1,0 +1,11 @@
+# Claves y configuración local (nunca se suben)
+.env
+
+# Python
+venv/
+__pycache__/
+.pytest_cache/
+
+# Node
+node_modules/
+frontend/dist/
